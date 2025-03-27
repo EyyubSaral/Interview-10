@@ -16,14 +16,15 @@ const SIX =
 function App() {
   const [numbers, setNumbers] = useState([ONE, TWO, THREE, FOUR, FIVE, SIX]);
   const [open, setOpen] = useState(false);
-  let randomNum;
+  const [randomNum, setRandomNum] = useState(1);
 
   const handleClick = () => {
     setOpen((prev) => !prev);
   };
 
   useEffect(() => {
-    randomNum = Math.floor(Math.random() * numbers.length);
+    const upgradeRandomNum = Math.floor(Math.random() * numbers.length);
+    setRandomNum(upgradeRandomNum);
   }, [open]);
 
   const handleClickPicture = (index) => {
@@ -43,16 +44,26 @@ function App() {
         handleClick={handleClick}
         open={open}
         handleClickPicture={handleClickPicture}
+        randomNum={randomNum}
       />
     </div>
   );
 }
 
-const Captcha = ({ numbers, handleClick, handleClickPicture, open }) => {
+const Captcha = ({
+  numbers,
+  handleClick,
+  handleClickPicture,
+  open,
+  randomNum,
+}) => {
   // KODUNUZ BURAYA GELECEK
   return (
     <div className="flex flex-col items-center bg-black min-h-screen">
       <h2 className="text-white font-bold text-lg">Modal</h2>
+      <p className="text-white font-bold text-lg bg-red-500 p-2 rounded">
+        İstenilen Sayı: {randomNum}
+      </p>
       {open ? (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="absolute inset-0 bg-gray-800 bg-opacity-50"></div>
